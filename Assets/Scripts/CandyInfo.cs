@@ -23,6 +23,6 @@ public class CandyInfo : MonoBehaviour
     {
         finalPrize = basePrize * bet;
         finalPrize = Mathf.Round(finalPrize * 100.0f) / 100.0f;
-        prize.text = finalPrize.ToString() + "$";
+        prize.text = finalPrize.ToString();
     }
 }

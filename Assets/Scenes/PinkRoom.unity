@@ -24677,6 +24677,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569799e3b8c3d4745897911d7dd17409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomModifier: 1
+  roomChanse: 0.25
   candyParams:
   - {fileID: 11400000, guid: 0854a1267e6180a40aad58e7b73bc27a, type: 2}
   - {fileID: 11400000, guid: 483d0411fc02d084d913e4b805f6c113, type: 2}
@@ -24701,6 +24703,12 @@ MonoBehaviour:
   - {fileID: 1479853678}
   columns: []
   ls: {fileID: 1920429153}
+  winSound: {fileID: 8300000, guid: 95837dde3f15f964d9db2b34ecc411ea, type: 3}
+  spin: {fileID: 8300000, guid: d0d2574412f934747a2222097302a3c5, type: 3}
+  spinBtn: {fileID: 8300000, guid: 08485b6391d099d40b8aed8d14b282a9, type: 3}
+  upBtn: {fileID: 8300000, guid: a255bfa85a672d0479680f64b582e537, type: 3}
+  downBtn: {fileID: 8300000, guid: 6de41abab29e68849aec883df63d8ef5, type: 3}
+  slotMusic: {fileID: 8300000, guid: b32a997485d5a63438d0b81a3ff31bb6, type: 3}
 --- !u!1 &1811670456
 GameObject:
   m_ObjectHideFlags: 0
@@ -35071,6 +35079,7 @@ GameObject:
   - component: {fileID: 1962287485}
   - component: {fileID: 1962287484}
   - component: {fileID: 1962287483}
+  - component: {fileID: 1962287486}
   m_Layer: 5
   m_Name: candy
   m_TagString: Untagged
@@ -35136,6 +35145,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 231, y: 235}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1962287486
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962287482}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9623525864b4a65498a76122e08317aa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1988858645
 GameObject:
   m_ObjectHideFlags: 0
@@ -40359,7 +40389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4033412786178137596
 GameObject:
   m_ObjectHideFlags: 0
@@ -45196,7 +45226,7 @@ RectTransform:
   m_GameObject: {fileID: 4033412786178137596}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 38.52, y: 38.52, z: 38.52}
+  m_LocalScale: {x: 45.26, y: 45.26, z: 45.26}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6237450777574276655}
@@ -45206,7 +45236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -54}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!199 &4123381426976610298

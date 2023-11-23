@@ -26,9 +26,12 @@ public class MenuController : MonoBehaviour
     private LoadingScreen ls;
 
     private bool showsettings;
+    private AudioSource musicPlayer;
 
     private void Start()
     {
+        musicPlayer = GetComponent<AudioSource>();
+
         soundImage.sprite = statusSprite[PlayerPrefs.GetInt("Sound", 1)];
         vibroImage.sprite = statusSprite[PlayerPrefs.GetInt("Vibro", 1)];
         musicImage.sprite = statusSprite[PlayerPrefs.GetInt("Music", 1)];
@@ -39,6 +42,10 @@ public class MenuController : MonoBehaviour
         {
             StaticParams.FromGame = false;
             ls.Hide();
+        }
+        if (PlayerPrefs.GetInt("Music", 1) == 1)
+        {
+            musicPlayer.Play();
         }
     }
 
@@ -56,6 +63,14 @@ public class MenuController : MonoBehaviour
     {
         int currentMusic = PlayerPrefs.GetInt("Music", 1);
         currentMusic = currentMusic == 1 ? 0 : 1;
+        if (currentMusic == 1)
+        {
+            musicPlayer.Play();
+        }
+        else
+        {
+            musicPlayer.Pause();
+        }
         musicPs[currentMusic].Play();
         PlayerPrefs.SetInt("Music", currentMusic);
         PlayerPrefs.Save();
@@ -105,7 +120,7 @@ public class MenuController : MonoBehaviour
             .AppendInterval(1.5f)
             .AppendCallback(() =>
             {
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Slot");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Slot");
             });
         changeScene.Restart();
     }

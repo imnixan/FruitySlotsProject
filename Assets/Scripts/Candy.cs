@@ -39,7 +39,7 @@ public class Candy : MonoBehaviour
         {
             particle.Play();
         }
-        prizeText.text = prize.ToString().Replace(".", ",") + "$";
+        prizeText.text = prize.ToString().Replace(".", ",");
         animator.SetTrigger("ShowWin");
     }
 }

@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 6bffcd66f1be4304aafbdba110db854a
   - enabled: 1
-    path: Assets/Scenes/Slot.unity
+    path: Assets/Scenes/PinkRoom.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

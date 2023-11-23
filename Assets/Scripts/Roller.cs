@@ -7,6 +7,12 @@ using DG.Tweening;
 public class Roller : MonoBehaviour
 {
     [SerializeField]
+    private float roomModifier = 1;
+
+    [SerializeField]
+    private float roomChanse = 0.25f;
+
+    [SerializeField]
     private CandyParams[] candyParams;
 
     [SerializeField]
@@ -45,19 +51,32 @@ public class Roller : MonoBehaviour
 
         playerBalance = PlayerPrefs.GetFloat("PlayerBalance", 500);
         bet = 0.1f;
-        betText.text = bet.ToString() + "$";
-        balanceText.text = playerBalance.ToString() + "$";
+        betText.text = bet.ToString();
+        balanceText.text = playerBalance.ToString();
         balanceText.text = balanceText.text.Replace(".", ",");
         ls.Hide();
+        if (PlayerPrefs.GetInt("Music", 1) == 1)
+        {
+            AudioSource musicPlayer = gameObject.AddComponent<AudioSource>();
+            musicPlayer.clip = slotMusic;
+            musicPlayer.loop = true;
+            musicPlayer.Play();
+        }
     }
 
     public void Roll()
     {
         if (!rolling)
         {
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(spinBtn, Vector2.zero);
+                AudioSource.PlayClipAtPoint(spin, Vector2.zero);
+            }
+
             playerBalance -= bet;
             playerBalance = Mathf.Round(playerBalance * 100.0f) / 100.0f;
-            balanceText.text = playerBalance.ToString() + "$";
+            balanceText.text = playerBalance.ToString();
             balanceText.text = balanceText.text.Replace(".", ",");
             rolling = true;
             finishedLines = 0;
@@ -79,7 +98,7 @@ public class Roller : MonoBehaviour
         matchedLines.Clear();
         for (int lineIndex = 0; lineIndex < StaticParams.MaxVertical; lineIndex++)
         {
-            if (Random.value <= StaticParams.LineChanse)
+            if (Random.value <= roomChanse)
             {
                 CandyParams candyParam = candyParams[0];
                 float rollChanse = Random.value;
@@ -109,13 +128,23 @@ public class Roller : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private AudioClip winSound,
+        spin,
+        spinBtn,
+        upBtn,
+        downBtn,
+        slotMusic;
+
     private void CheckConnects()
     {
         float prize = 0;
         float totalPrize = 0;
+
         foreach (var elementIndex in matchedLines)
         {
-            prize = (1 - columns[0].candyColumn[elementIndex].candyParam.chanse) * bet;
+            prize =
+                (1 - columns[0].candyColumn[elementIndex].candyParam.chanse) * (bet * roomModifier);
             prize = Mathf.Round(prize * 100.0f) / 100.0f;
             foreach (var column in columns)
             {
@@ -125,9 +154,20 @@ public class Roller : MonoBehaviour
             prize = Mathf.Round(prize * 100.0f) / 100.0f;
             totalPrize += prize;
         }
+        if (totalPrize > 0)
+        {
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                AudioSource.PlayClipAtPoint(winSound, Vector2.zero);
+            }
+            if (PlayerPrefs.GetInt("Vibro", 1) == 1)
+            {
+                Handheld.Vibrate();
+            }
+        }
         playerBalance += totalPrize;
         playerBalance = Mathf.Round(playerBalance * 100.0f) / 100.0f;
-        balanceText.text = playerBalance.ToString() + "$";
+        balanceText.text = playerBalance.ToString();
         balanceText.text = balanceText.text.Replace(".", ",");
     }
 
@@ -149,9 +189,13 @@ public class Roller : MonoBehaviour
             bet = playerBalance;
         }
         bet = Mathf.Round(bet * 100.0f) / 100.0f;
-        betText.text = bet.ToString() + "$";
+        betText.text = bet.ToString();
         betText.text = betText.text.Replace(".", ",");
         HideInfo();
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        {
+            AudioSource.PlayClipAtPoint(upBtn, Vector2.zero);
+        }
     }
 
     public void DownBet()
@@ -162,9 +206,13 @@ public class Roller : MonoBehaviour
             bet = 0.1f;
         }
         bet = Mathf.Round(bet * 100.0f) / 100.0f;
-        betText.text = bet.ToString() + "$";
+        betText.text = bet.ToString();
         betText.text = betText.text.Replace(".", ",");
         HideInfo();
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        {
+            AudioSource.PlayClipAtPoint(downBtn, Vector2.zero);
+        }
     }
 
     public void ShowInfo()
@@ -175,7 +223,7 @@ public class Roller : MonoBehaviour
             infoWindow.DOAnchorPosX(0, 0.3f).Play();
             foreach (var candyInfo in candiesInfo)
             {
-                candyInfo.SetPrize(bet);
+                candyInfo.SetPrize(bet * roomModifier);
             }
         }
         else
@@ -224,7 +272,7 @@ public class Roller : MonoBehaviour
             .AppendCallback(() =>
             {
                 StaticParams.FromGame = true;
-                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Menu");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
             });
         changeScene.Restart();
     }

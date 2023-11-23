@@ -8,7 +8,6 @@ public static class StaticParams
 {
     public static int MaxVertical = 7;
     public static int MaxHorizontal = 5;
-    public static float LineChanse = 0.35f;
 
     public static bool FromGame;
 }
