@@ -11,16 +11,6 @@ public class LoadingScreen : MonoBehaviour
 
     private Color transparent = new Color(0, 0, 0, 0);
 
-    private void Awake()
-    {
-        if (StaticParams.FromGame)
-        {
-            screen.color = Color.white;
-            candy.color = Color.white;
-            text.color = Color.white;
-        }
-    }
-
     public void Hide()
     {
         screen.DOColor(transparent, 0.5f).Play();

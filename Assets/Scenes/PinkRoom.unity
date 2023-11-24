@@ -24677,7 +24677,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569799e3b8c3d4745897911d7dd17409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bomb: {fileID: 11400000, guid: b21ab34aca248ab47888cc531dbfdae4, type: 2}
+  rocket: {fileID: 11400000, guid: 96b31ac498d415e40b4b18d387daa73f, type: 2}
   roomModifier: 1
+  roomNumber: 0
   roomChanse: 0.25
   candyParams:
   - {fileID: 11400000, guid: 0854a1267e6180a40aad58e7b73bc27a, type: 2}

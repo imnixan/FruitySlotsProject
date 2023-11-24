@@ -4874,7 +4874,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569799e3b8c3d4745897911d7dd17409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bomb: {fileID: 11400000, guid: b21ab34aca248ab47888cc531dbfdae4, type: 2}
+  rocket: {fileID: 11400000, guid: 96b31ac498d415e40b4b18d387daa73f, type: 2}
   roomModifier: 4.8
+  roomNumber: 0
   roomChanse: 0.075
   candyParams:
   - {fileID: 11400000, guid: b8d9df80c20ca6845b0d4153ac53fc8d, type: 2}
@@ -4901,7 +4904,7 @@ MonoBehaviour:
   spinBtn: {fileID: 8300000, guid: 08485b6391d099d40b8aed8d14b282a9, type: 3}
   upBtn: {fileID: 8300000, guid: a255bfa85a672d0479680f64b582e537, type: 3}
   downBtn: {fileID: 8300000, guid: 6de41abab29e68849aec883df63d8ef5, type: 3}
-  slotMusic: {fileID: 8300000, guid: b32a997485d5a63438d0b81a3ff31bb6, type: 3}
+  slotMusic: {fileID: 8300000, guid: 6aebe491e6ae0be4ca25c9956ac922d4, type: 3}
 --- !u!1 &1811670456
 GameObject:
   m_ObjectHideFlags: 0

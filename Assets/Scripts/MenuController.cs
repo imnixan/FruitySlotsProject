@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
@@ -8,6 +9,11 @@ public class MenuController : MonoBehaviour
     private RectTransform appname,
         hud,
         settingsWindow;
+
+    [SerializeField]
+    private TextMeshProUGUI balanceText;
+
+    private float balance;
 
     [SerializeField]
     private ParticleSystem[] soundPs,
@@ -22,14 +28,37 @@ public class MenuController : MonoBehaviour
     [SerializeField]
     private Sprite[] statusSprite;
 
-    [SerializeField]
-    private LoadingScreen ls;
-
     private bool showsettings;
     private AudioSource musicPlayer;
 
+    [SerializeField]
+    private ParticleSystem ps;
+
+    public void UpdateBalance(bool salut = false)
+    {
+        balance = PlayerPrefs.GetFloat("PlayerBalance", StaticParams.StartMoney);
+        balance = Mathf.Round(balance * 100.0f) / 100.0f;
+
+        Sequence updateBalance = DOTween.Sequence();
+        updateBalance
+            .Append(balanceText.rectTransform.DOScale(1.2f, 0.3f))
+            .AppendCallback(() =>
+            {
+                balanceText.text = balance.ToString();
+                balanceText.text = balanceText.text.Replace(".", ",");
+                if (salut)
+                {
+                    ps.Play();
+                }
+            })
+            .Append(balanceText.rectTransform.DOScale(1f, 0.3f));
+        updateBalance.Restart();
+    }
+
     private void Start()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
+        Application.targetFrameRate = 400;
         musicPlayer = GetComponent<AudioSource>();
 
         soundImage.sprite = statusSprite[PlayerPrefs.GetInt("Sound", 1)];
@@ -37,16 +66,11 @@ public class MenuController : MonoBehaviour
         musicImage.sprite = statusSprite[PlayerPrefs.GetInt("Music", 1)];
         appname.DOScale(Vector2.zero, 0.5f).From().Play();
         hud.DOAnchorPosY(-2000, 1.5f).From().Play();
-
-        if (StaticParams.FromGame)
-        {
-            StaticParams.FromGame = false;
-            ls.Hide();
-        }
         if (PlayerPrefs.GetInt("Music", 1) == 1)
         {
             musicPlayer.Play();
         }
+        UpdateBalance();
     }
 
     public void ChangeSound()
@@ -113,14 +137,11 @@ public class MenuController : MonoBehaviour
     {
         Sequence changeScene = DOTween.Sequence();
         changeScene
-            .PrependCallback(() =>
-            {
-                ls.Show();
-            })
-            .AppendInterval(1.5f)
+            .Append(hud.DOAnchorPosY(-2000, 0.5f))
+            .Join(appname.DOAnchorPosY(3000, 0.5f))
             .AppendCallback(() =>
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Slot");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("GuestRoom");
             });
         changeScene.Restart();
     }

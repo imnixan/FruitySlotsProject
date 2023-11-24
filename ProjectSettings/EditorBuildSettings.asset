@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 6bffcd66f1be4304aafbdba110db854a
   - enabled: 1
+    path: Assets/Scenes/GuestRoom.unity
+    guid: b7c145b4a3b6fc04bbc377e382668594
+  - enabled: 1
     path: Assets/Scenes/PinkRoom.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/GreenRoom.unity
+    guid: 2db37c031d328934da28f82ca4e12711
+  - enabled: 1
+    path: Assets/Scenes/BlueRoom.unity
+    guid: 12e4b3edf554baa4cb925a46a7a94eb7
   m_configObjects: {}

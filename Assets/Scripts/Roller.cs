@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
@@ -7,7 +6,14 @@ using DG.Tweening;
 public class Roller : MonoBehaviour
 {
     [SerializeField]
+    private CandyParams bomb,
+        rocket;
+
+    [SerializeField]
     private float roomModifier = 1;
+
+    [SerializeField]
+    private float roomNumber;
 
     [SerializeField]
     private float roomChanse = 0.25f;
@@ -49,7 +55,7 @@ public class Roller : MonoBehaviour
             column.InitStartCandies(candyParams);
         }
 
-        playerBalance = PlayerPrefs.GetFloat("PlayerBalance", 500);
+        playerBalance = PlayerPrefs.GetFloat("PlayerBalance", StaticParams.StartMoney);
         bet = 0.1f;
         betText.text = bet.ToString();
         balanceText.text = playerBalance.ToString();
@@ -107,6 +113,22 @@ public class Roller : MonoBehaviour
                     if (rollChanse <= param.chanse)
                     {
                         candyParam = param;
+                        if (param.chanse <= 0.1f)
+                        {
+                            float extraChanse = Random.value;
+                            if (extraChanse < 0.3f && PlayerPrefs.GetInt("Bomb") > 0)
+                            {
+                                candyParam = bomb;
+                                PlayerPrefs.SetInt("Bomb", 0);
+                                PlayerPrefs.Save();
+                            }
+                            if (extraChanse < 0.2f && PlayerPrefs.GetInt("Rocket") > 0)
+                            {
+                                candyParam = rocket;
+                                PlayerPrefs.SetInt("Rocket", 0);
+                                PlayerPrefs.Save();
+                            }
+                        }
                     }
                 }
                 foreach (var column in columns)
@@ -152,6 +174,14 @@ public class Roller : MonoBehaviour
             }
             prize *= StaticParams.MaxHorizontal;
             prize = Mathf.Round(prize * 100.0f) / 100.0f;
+            if (columns[0].candyColumn[elementIndex].candyParam.candyId == 150)
+            {
+                prize = 750;
+            }
+            if (columns[0].candyColumn[elementIndex].candyParam.candyId == 200)
+            {
+                prize = 1500;
+            }
             totalPrize += prize;
         }
         if (totalPrize > 0)
@@ -271,8 +301,8 @@ public class Roller : MonoBehaviour
             .AppendInterval(1.5f)
             .AppendCallback(() =>
             {
-                StaticParams.FromGame = true;
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+                StaticParams.PrevScene = roomNumber;
+                UnityEngine.SceneManagement.SceneManager.LoadScene("GuestRoom");
             });
         changeScene.Restart();
     }

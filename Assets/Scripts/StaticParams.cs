@@ -9,5 +9,6 @@ public static class StaticParams
     public static int MaxVertical = 7;
     public static int MaxHorizontal = 5;
 
-    public static bool FromGame;
+    public static float PrevScene;
+    public static float StartMoney = 420;
 }

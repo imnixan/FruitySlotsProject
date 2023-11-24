@@ -40,6 +40,10 @@ public class Candy : MonoBehaviour
             particle.Play();
         }
         prizeText.text = prize.ToString().Replace(".", ",");
+        if (candyParam.candyId >= 150)
+        {
+            prizeText.text = "extra";
+        }
         animator.SetTrigger("ShowWin");
     }
 }
